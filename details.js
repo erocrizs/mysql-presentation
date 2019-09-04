@@ -20,7 +20,7 @@ const details = {
 
 const days_released = 30;
 const player_activity_rate = 0.25;
-const avg_game_per_player_day = 3.5;
+const avg_game_per_player_day = 1.5;
 
 details.match_count = details.player_count
     * player_activity_rate

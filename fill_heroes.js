@@ -35,8 +35,15 @@ async function fill_hero () {
 }
 
 async function fill_roles () {
-    const table_name = 'hero_roles';
+    const rows = _.map(
+        details.roles, 
+        (name, idx) => ({id: idx + 1, name})
+    );
 
+    await db.insertRows(rows, 'roles');
+}
+
+async function fill_hero_roles () {
     const role_rows = _.times(
         details.hero_count,
         idx => {
@@ -47,10 +54,13 @@ async function fill_roles () {
                     role_count,
                     () => ({
                         hero_id: (idx + 1),
-                        role: faker.random.arrayElement(details.roles)
+                        role_id: faker.random.number({
+                            min: 1,
+                            max: details.roles.length
+                        })
                     })
                 ),
-                'role'
+                'role_id'
             );
 
             return roles;
@@ -66,6 +76,7 @@ async function run () {
     console.log('Starting filling heroes');
     await fill_hero();
     await fill_roles();
+    await fill_hero_roles();
     console.log('Finished filling heroes');
 }
 

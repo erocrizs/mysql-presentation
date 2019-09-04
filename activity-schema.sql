@@ -18,7 +18,7 @@ CREATE TABLE `matches` (
 
 CREATE TABLE `hero_roles` (
   `hero_id` int,
-  `role` ENUM ('hitter', 'bruiser', 'tank', 'assassin', 'mage', 'support')
+  `role_id` int
 );
 
 CREATE TABLE `heroes` (
@@ -33,7 +33,14 @@ CREATE TABLE `match_plays` (
   `team` ENUM ('stratus', 'cirrus')
 );
 
+CREATE TABLE `roles` (
+	`id` int PRIMARY KEY auto_increment,
+	`name` varchar(30)
+);
+
 ALTER TABLE `hero_roles` ADD FOREIGN KEY (`hero_id`) REFERENCES `heroes` (`id`) ON DELETE CASCADE;
+
+ALTER TABLE `hero_roles` ADD FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
 
 ALTER TABLE `match_plays` ADD FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
 
